@@ -1,0 +1,108 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "Home Page";
+}
+<form method="post" enctype="multipart/form-data">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4">
+                Name:-
+                <br />
+                <input type="text" name="name" placeholder="Enter Your Name" class="form-control" />
+                <br />
+                Email:-
+                <br />
+                <input type="email" name="email" placeholder="Enter Your Name" class="form-control" />
+                <br />
+                Password:-
+                <br />
+                <input type="password" name="pass" id="pass" placeholder="Enter Your password" class="form-control" />
+                <br />
+                Confirm Password :-
+                <br />
+                <input type="password" name="cpass" id="cpass" placeholder="Confirm Your Password" class="form-control" /><span class="msg"></span>
+                <br />
+                Gender :-
+                <br />
+                <input type="radio" name="gender" value="Male" /> Male &nbsp;<input type="radio" name="gender" value="Female" /> Female<br /><br />
+                Profile Pic :-
+                <br />
+                <input type="file" id="imageInput" name="ppic" class="form-control" />
+                <br />
+                <img id="selectedImage" src="#" alt="Selected Image" style="height:100px;width:100px">
+                <br />
+                <br />
+                <input type="submit" onclick="validpass()" class="btn btn-dark" value="Register" />
+            </div>
+            <div class="col-sm-8">
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Email</th>
+
+                            <th>Password</th>
+                            <th>Gender</th>
+                            <th>Profile Pic</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model != null)
+                        {
+                            int i = 1;
+                            foreach (System.Data.DataRow row in Model.Rows)
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@row["name"]</td>
+                                    <td>@row["email"]</td>
+                                    <td>@row["pass"]</td>
+                                    <td>@row["gender"]</td>
+                                    <td>@row["popic"]</td>
+                                    <td><a href=""><i class=""></i></a></td>
+                                </tr>
+                            }
+                            i = i + 1;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+<script>
+  function showImage() {
+    const input = document.getElementById('imageInput');
+    const selectedImage = document.getElementById('selectedImage');
+
+    const file = input.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        selectedImage.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  const imageInput = document.getElementById('imageInput');
+    imageInput.addEventListener('change', showImage);
+
+    function validpass()
+    {
+        var msg = document.querySelector(".msg")
+        var pass = document.querySelector("#pass");
+        var cpass = document.querySelector("#cpass");
+        if (pass.value != cpass.value)
+        {
+            msg.innerHTML="Password Doesn't Match !!"
+        }
+    }
+</script>
